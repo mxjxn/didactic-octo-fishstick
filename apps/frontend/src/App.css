@@ -1,0 +1,15 @@
+.app {
+  text-align: center;
+}
+
+.actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+h1 {
+  color: #646cff;
+  margin-bottom: 2rem;
+}

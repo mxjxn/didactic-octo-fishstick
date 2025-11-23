@@ -1,0 +1,10 @@
+{
+  "name": "@farcaster-risk/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Foundry contracts - run: forge build'",
+    "test": "echo 'Foundry contracts - run: forge test'",
+    "lint": "echo 'Foundry contracts - no linting configured yet'"
+  }
+}
