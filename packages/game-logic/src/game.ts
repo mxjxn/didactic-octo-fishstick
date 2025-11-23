@@ -1,6 +1,10 @@
 import { GameState, Player, Territory } from './types'
 import { INITIAL_TERRITORIES, CONTINENT_BONUSES } from './territories'
 
+// Game constants
+const MAX_ATTACKER_DICE = 3
+const MAX_DEFENDER_DICE = 2
+
 export function initializeGame(gameId: string, players: Player[]): GameState {
   // Distribute territories among players
   const territories: Territory[] = INITIAL_TERRITORIES.map((t, index) => ({
@@ -102,8 +106,8 @@ export function executeAttack(game: GameState, fromTerritoryId: string, toTerrit
   }
 
   // Execute attack
-  const attackerDiceCount = Math.min(3, fromTerritory.armies - 1)
-  const defenderDiceCount = Math.min(2, toTerritory.armies)
+  const attackerDiceCount = Math.min(MAX_ATTACKER_DICE, fromTerritory.armies - 1)
+  const defenderDiceCount = Math.min(MAX_DEFENDER_DICE, toTerritory.armies)
 
   const attackerDice = rollDice(attackerDiceCount)
   const defenderDice = rollDice(defenderDiceCount)
