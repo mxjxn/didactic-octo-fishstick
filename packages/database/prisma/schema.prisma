@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://www.prisma.io/docs
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  farcasterFid  Int      @unique
+  username      String
+  displayName   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  players       Player[]
+}
+
+model Game {
+  id              String   @id @default(cuid())
+  status          String   // waiting, active, finished
+  currentPlayerId String?
+  phase           String   // placement, attack, fortify
+  winner          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  players         Player[]
+  territories     Territory[]
+  moves           Move[]
+}
+
+model Player {
+  id            String   @id @default(cuid())
+  gameId        String
+  userId        String
+  color         String
+  armiesToPlace Int      @default(0)
+  isActive      Boolean  @default(true)
+  
+  game          Game     @relation(fields: [gameId], references: [id])
+  user          User     @relation(fields: [userId], references: [id])
+  
+  @@unique([gameId, userId])
+}
+
+model Territory {
+  id          String   @id @default(cuid())
+  gameId      String
+  name        String
+  continent   String
+  ownerId     String
+  armies      Int      @default(1)
+  
+  game        Game     @relation(fields: [gameId], references: [id])
+  
+  @@unique([gameId, name])
+}
+
+model Move {
+  id              String   @id @default(cuid())
+  gameId          String
+  playerId        String
+  moveType        String   // attack, fortify, place
+  fromTerritory   String?
+  toTerritory     String?
+  armies          Int?
+  result          String?
+  createdAt       DateTime @default(now())
+  
+  game            Game     @relation(fields: [gameId], references: [id])
+}

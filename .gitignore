@@ -1,0 +1,14 @@
+node_modules/
+.turbo/
+dist/
+build/
+.next/
+.env*.local
+coverage/
+*.log
+.DS_Store
+.foundry/
+cache/
+out/
+broadcast/
+lib/
