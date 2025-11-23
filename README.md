@@ -57,7 +57,24 @@ This is a **Turborepo** monorepo containing:
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Quick Setup (Recommended)
+
+Use the setup script for automated configuration:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+This will:
+- Install all dependencies
+- Create environment files
+- Generate Prisma client
+- Build all packages
+
+### Manual Setup
+
+#### Prerequisites
 
 - Node.js >= 18.0.0
 - npm >= 10.8.2
