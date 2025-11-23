@@ -6,9 +6,16 @@ import PlayerInfo from './components/PlayerInfo'
 import { GameState } from './types'
 import { apiClient } from './services/api'
 
+interface FarcasterContext {
+  user?: {
+    fid: number
+    username?: string
+  }
+}
+
 function App() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false)
-  const [context, setContext] = useState<any>(null)
+  const [context, setContext] = useState<FarcasterContext | null>(null)
   const [gameState, setGameState] = useState<GameState | null>(null)
   const [selectedTerritory, setSelectedTerritory] = useState<string | null>(null)
 
@@ -20,7 +27,7 @@ function App() {
         
         // Get context from Farcaster
         const ctx = await sdk.context
-        setContext(ctx)
+        setContext(ctx as FarcasterContext)
         
         // Load or create game
         if (ctx?.user?.fid) {

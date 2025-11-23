@@ -1,4 +1,4 @@
-import { GameState, Player, Territory, AttackResult } from './types'
+import { GameState, Player, Territory } from './types'
 import { INITIAL_TERRITORIES, CONTINENT_BONUSES } from './territories'
 
 export function initializeGame(gameId: string, players: Player[]): GameState {

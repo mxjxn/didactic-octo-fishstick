@@ -1,10 +1,15 @@
 import { NeynarAPIClient } from '@neynar/nodejs-sdk'
+import { GameState } from '@farcaster-risk/game-logic'
 
 const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY || ''
 
+interface GameStateMap {
+  [key: string]: GameState
+}
+
 export class GameService {
   private neynarClient: NeynarAPIClient | null = null
-  private games: Map<string, any> = new Map()
+  private games: GameStateMap = {}
   private playerGames: Map<number, string> = new Map()
 
   constructor() {
@@ -43,15 +48,15 @@ export class GameService {
   async joinOrCreateGame(farcasterFid: number) {
     // Check if player already in a game
     const existingGameId = this.playerGames.get(farcasterFid)
-    if (existingGameId && this.games.has(existingGameId)) {
-      return this.games.get(existingGameId)
+    if (existingGameId && this.games[existingGameId]) {
+      return this.games[existingGameId]
     }
 
     // Get user data from Neynar
     const userData = await this.getUserData(farcasterFid)
 
     // Find an open game or create new one
-    let game = Array.from(this.games.values()).find(g => g.status === 'waiting' && g.players.length < 4)
+    let game = Object.values(this.games).find(g => g.status === 'waiting' && g.players.length < 4)
 
     if (!game) {
       // Create new game
@@ -66,11 +71,11 @@ export class GameService {
         armiesToPlace: 0
       }])
 
-      this.games.set(gameId, game)
+      this.games[gameId] = game
     } else {
       // Add player to existing game
       const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00']
-      const usedColors = game.players.map((p: any) => p.color)
+      const usedColors = game.players.map(p => p.color)
       const availableColor = colors.find(c => !usedColors.includes(c)) || '#ffffff'
 
       game.players.push({
@@ -91,12 +96,12 @@ export class GameService {
     }
 
     this.playerGames.set(farcasterFid, game.id)
-    this.games.set(game.id, game)
+    this.games[game.id] = game
     return game
   }
 
   async getGame(gameId: string) {
-    const game = this.games.get(gameId)
+    const game = this.games[gameId]
     if (!game) {
       throw new Error('Game not found')
     }
@@ -104,46 +109,46 @@ export class GameService {
   }
 
   async attack(gameId: string, fromTerritoryId: string, toTerritoryId: string, playerId: number) {
-    const game = this.games.get(gameId)
+    const game = this.games[gameId]
     if (!game) throw new Error('Game not found')
 
     const { executeAttack } = await import('@farcaster-risk/game-logic')
     const updatedGame = executeAttack(game, fromTerritoryId, toTerritoryId, playerId)
     
-    this.games.set(gameId, updatedGame)
+    this.games[gameId] = updatedGame
     return updatedGame
   }
 
   async fortify(gameId: string, fromTerritoryId: string, toTerritoryId: string, armies: number, playerId: number) {
-    const game = this.games.get(gameId)
+    const game = this.games[gameId]
     if (!game) throw new Error('Game not found')
 
     const { executeFortify } = await import('@farcaster-risk/game-logic')
     const updatedGame = executeFortify(game, fromTerritoryId, toTerritoryId, armies, playerId)
     
-    this.games.set(gameId, updatedGame)
+    this.games[gameId] = updatedGame
     return updatedGame
   }
 
   async placeArmies(gameId: string, territoryId: string, armies: number, playerId: number) {
-    const game = this.games.get(gameId)
+    const game = this.games[gameId]
     if (!game) throw new Error('Game not found')
 
     const { executePlaceArmies } = await import('@farcaster-risk/game-logic')
     const updatedGame = executePlaceArmies(game, territoryId, armies, playerId)
     
-    this.games.set(gameId, updatedGame)
+    this.games[gameId] = updatedGame
     return updatedGame
   }
 
   async endTurn(gameId: string, playerId: number) {
-    const game = this.games.get(gameId)
+    const game = this.games[gameId]
     if (!game) throw new Error('Game not found')
 
     const { executeEndTurn } = await import('@farcaster-risk/game-logic')
     const updatedGame = executeEndTurn(game, playerId)
     
-    this.games.set(gameId, updatedGame)
+    this.games[gameId] = updatedGame
     return updatedGame
   }
 }
