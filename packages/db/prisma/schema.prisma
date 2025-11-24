@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Game {
+  id          String   @id @default(cuid())
+  status      String   @default("waiting") // waiting, active, finished
+  currentTurn String?
+  phase       String   @default("deploy") // deploy, attack, fortify, waiting
+  turnNumber  Int      @default(1)
+  winner      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  players     Player[]
+  territories Territory[]
+  moves       Move[]
+}
+
+model Player {
+  id           String   @id @default(cuid())
+  fid          String
+  username     String?
+  pfp          String?
+  color        String
+  armies       Int      @default(0)
+  territories  Int      @default(0)
+  gameId       String
+  isActive     Boolean  @default(true)
+  joinedAt     DateTime @default(now())
+
+  game         Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  ownedTerritories Territory[]
+
+  @@unique([gameId, fid])
+  @@index([fid])
+}
+
+model Territory {
+  id          String   @id @default(cuid())
+  name        String
+  continent   String
+  armies      Int      @default(1)
+  ownerId     String?
+  gameId      String
+  adjacentIds String[] // Array of territory IDs
+  positionX   Float    @default(0)
+  positionY   Float    @default(0)
+
+  game        Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  owner       Player?  @relation(fields: [ownerId], references: [id])
+
+  @@unique([gameId, name])
+  @@index([gameId])
+  @@index([ownerId])
+}
+
+model Move {
+  id              String   @id @default(cuid())
+  gameId          String
+  playerId        String
+  type            String   // deploy, attack, fortify
+  fromTerritoryId String?
+  toTerritoryId   String
+  armies          Int
+  result          Json?    // Store attack results, etc.
+  createdAt       DateTime @default(now())
+
+  game            Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@index([gameId])
+  @@index([playerId])
+}
