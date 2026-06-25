@@ -13,3 +13,302 @@ h1 {
   color: #646cff;
   margin-bottom: 2rem;
 }
+
+/* Loading */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Lobby */
+.lobby {
+  max-width: 400px;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.lobby h1 {
+  margin-bottom: 0.5rem;
+}
+
+.lobby-username {
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+.lobby-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lobby-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #1a1a2e;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lobby-btn:hover:not(:disabled) {
+  border-color: #646cff;
+  background: #2a2a4e;
+}
+
+.lobby-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.lobby-btn.primary {
+  background: #646cff;
+  border-color: #646cff;
+}
+
+.lobby-btn.primary:hover:not(:disabled) {
+  background: #535bf2;
+}
+
+.lobby-btn.secondary {
+  background: #2a2a4e;
+  border-color: #646cff;
+}
+
+.lobby-btn.link {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lobby-btn.link:hover:not(:disabled) {
+  color: #646cff;
+  border-color: transparent;
+}
+
+.lobby-btn.small {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.lobby-join {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lobby-join input {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.lobby-join input::placeholder {
+  text-transform: none;
+  letter-spacing: normal;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.lobby-error {
+  color: #f87171;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.lobby-loading {
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 1rem;
+}
+
+/* Open games list */
+.lobby-open-games {
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.lobby-open-games h3 {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.75rem;
+}
+
+.lobby-open-games ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lobby-open-games li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: #1a1a2e;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+
+.lobby-game-info {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.lobby-game-info strong {
+  color: #fff;
+}
+
+/* Waiting Room */
+.waiting-room {
+  max-width: 400px;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.waiting-room h2 {
+  color: #646cff;
+  margin-bottom: 1.5rem;
+}
+
+.waiting-code {
+  margin-bottom: 1.5rem;
+}
+
+.waiting-code p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.waiting-code-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.code-text {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #fff;
+  background: #1a1a2e;
+  border: 2px solid #646cff;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
+
+.waiting-share-url {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+  word-break: break-all;
+  margin-top: 0.5rem;
+}
+
+.waiting-players {
+  margin-bottom: 1.5rem;
+}
+
+.waiting-players h3 {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.75rem;
+}
+
+.waiting-players ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.waiting-player {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.player-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.creator-badge {
+  font-size: 0.7rem;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.15);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.waiting-message {
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1rem;
+}
+
+.waiting-actions {
+  margin-bottom: 1rem;
+}
+
+.lobby-btn.leave {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.85rem;
+}
+
+.lobby-btn.leave:hover {
+  color: #f87171;
+}
+
+/* Game board */
+.game-board {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.territory {
+  padding: 1rem;
+  border: 2px solid #333;
+  border-radius: 8px;
+  background: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.territory:hover {
+  border-color: #646cff;
+  transform: scale(1.05);
+}
+
+.territory.selected {
+  border-color: #4ade80;
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
+}
+
+.player-info {
+  padding: 1rem;
+  margin: 1rem 0;
+  background: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
